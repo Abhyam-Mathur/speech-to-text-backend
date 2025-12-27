@@ -6,7 +6,7 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
-import whisper
+# import whisper
 
 # ---------------- CONFIG ----------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -32,7 +32,7 @@ app.add_middleware(
 )
 
 # ---------------- LOAD MODEL ----------------
-model = whisper.load_model("small")
+# model = whisper.load_model("small")
 
 # ---------------- HELPERS ----------------
 def extract_audio(video_path: str, audio_path: str):
@@ -50,9 +50,14 @@ def extract_audio(video_path: str, audio_path: str):
         stderr=subprocess.DEVNULL
     )
 
+# def transcribe_audio(audio_path: str):
+ #   result = model.transcribe(audio_path, word_timestamps=True)
+  #  return result["segments"]
+
 def transcribe_audio(audio_path: str):
-    result = model.transcribe(audio_path, word_timestamps=True)
-    return result["segments"]
+    # Disabled on Render due to memory limits
+    return []
+
 
 def create_video_clip(video_path: str, start_time: float, end_time: float, output_path: str):
     """Extract a video clip from start_time to end_time"""
